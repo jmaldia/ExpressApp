@@ -11,7 +11,10 @@ app.get("/", (req, res) => {
 
 // ----------------------------
 // Using EJS
-
+app.get("/fallinlovewith/:thing", (req, res) => {
+    let thing = req.params.thing;
+    res.render("love.ejs", { thingVar: thing });
+});
 
 // ----------------------------
 // create bye route 
