@@ -3,29 +3,34 @@ let app = express();
 
 // create root route 
 app.get("/", (req, res) => {
-    res.send("Hi there welcome to my assignment");
+    // Using inline html
+    // res.send("<h1>Welcome to the Home Page</h1><h2>Here we go</h2>");
+    // Using EJS and render
+    res.render("home.ejs");
 });
+
+// ----------------------------
+// Using EJS
+
+
+// ----------------------------
 // create bye route 
 app.get("/bye", (req, res) => {
     res.send("Bye bro!");
 });
 // create speak route
 app.get("/speak/:animal", (req, res) => {
-    let animal = req.params.animal;
-
-    let phrase = (animal, sound) => {
-        return `The ${animal} says '${sound}'`
+    let sounds = {
+        pig: "Oink", 
+        cow: "Moo", 
+        dog: "Woof Woof", 
+        cat: "#^(&#%(@*", 
+        goldfish: "Glug glug"
     }
+    let animal = req.params.animal.toLowerCase(); 
+    let sound = sounds[animal];
 
-    if (animal === "pig") {
-        res.send(phrase(animal, 'Oink'));
-    } else if (animal === "cow") {
-        res.send(phrase(animal, 'Moo'));
-    } else if (animal === "dog") {
-        res.send(phrase(animal, 'Woof Woof'));
-    } else {
-        res.send("Sorry, I don't know that animal");
-    }
+    res.send(`The ${animal} says '${sound}'`);
 });
 // using route parameters
 // follows a pattern
