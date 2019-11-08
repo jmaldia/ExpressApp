@@ -89,6 +89,23 @@ app.get("/repeat/:word/:count", (req, res) => {
     
     res.send(repeat.trim());
 });
+
+// ---------------
+// MOVIE ROUTES
+// ---------------
+app.get("/movies", (req, res) => {
+    request("http://www.omdbapi.com/?s=guardians+of+the+galaxy&apikey=thewdb", (error, response, body) => {
+        if (error) {
+            console.log(error)
+        } else if (!error && response.statusCode === 200) {
+            movieData = JSON.parse(body).Search;
+            console.log(movieData);
+            res.render("movies", { movies: movieData });
+        };
+    });
+});
+
+
 // create star route - a catch all 
 // order of routes matter
 // the routes that first matches will be executed

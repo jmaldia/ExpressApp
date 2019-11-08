@@ -1,0 +1,25 @@
+<% include partials/header %>
+
+    <h1>Movies Page</h1>
+
+    <ul id="movie-container">
+        <% movies.forEach((movie) => { %>
+            <li class="movies">
+                <h3>
+                    <strong><%= movie.Title %></strong> 
+                </h3>
+                <% if (movie.Poster) { %>
+                    <p>
+                        <img src="<%= movie.Poster %>" alt="">
+                    </p>
+                <% } %>
+                <ul>
+                    <li>Year: <%= movie.Year %></li>
+                    <li>Type: <%= movie.Type %></li>  
+                    <li>IMDB ID: <%= movie.imdbID %></li> 
+                </ul>
+            </li>
+        <% }) %> 
+    </ul>
+    
+<% include partials/footer %>
