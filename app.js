@@ -1,6 +1,7 @@
 let express= require("express");
 let app = express();
 let bodyParser = require("body-parser"); // used to get the body of a post
+let request = require("request");
 // tells express to serve up the directory
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static("public"));
@@ -20,13 +21,29 @@ app.get("/fallinlovewith/:thing", (req, res) => {
     let thing = req.params.thing;
     res.render("love", { thingVar: thing });
 });
-    
+
 let posts = [
     { title: "Post 1", author: "Susy" },
     { title: "My Pet Bunny", author: "Charlie" },
     { title: "Can you believe this?", author: "Colt" }
 ];
 
+request("https://jsonplaceholder.typicode.com/posts	", (error, response, body) => {
+    let postsData;
+    
+    if (error) {
+        console.log(error)
+    } else if (!error && response.statusCode === 200) {
+        postsData = JSON.parse(body);
+    };
+
+    console.log(postsData)
+
+    postsData.forEach(post => {
+        posts.push({ title: post.title, author: post.userId }); 
+    });
+});
+    
 // route for posts
 app.get("/posts", (req, res) => {
     res.render("posts", { posts: posts });
@@ -36,6 +53,7 @@ app.get("/posts", (req, res) => {
 app.post("/addPost", (req, res) => {
     let newpost = req.body.newpost;
     let author = req.body.author;
+    
     posts.push({ title: newpost, author: author }); 
 
     res.redirect("/posts");
