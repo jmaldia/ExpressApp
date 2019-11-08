@@ -16,4 +16,8 @@ request("https://jsonplaceholder.typicode.com/posts	", (error, response, body) =
             console.log(JSON.parse(body));
         };
     });
-    
+
+
+// Movie API
+// General search: http://www.omdbapi.com/?s=guardians+of+the+galaxy&apikey=thewdb 
+// Search with Movie ID: http://www.omdbapi.com/?i=tt3896198&apikey=thewdb 

@@ -37,8 +37,6 @@ request("https://jsonplaceholder.typicode.com/posts	", (error, response, body) =
         postsData = JSON.parse(body);
     };
 
-    console.log(postsData)
-
     postsData.forEach(post => {
         posts.push({ title: post.title, author: post.userId }); 
     });
