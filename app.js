@@ -1,29 +1,44 @@
 let express= require("express");
 let app = express();
+let bodyParser = require("body-parser"); // used to get the body of a post
+// tells express to serve up the directory
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.static("public"));
+app.set("view engine", "ejs");
 
 // create root route 
 app.get("/", (req, res) => {
     // Using inline html
     // res.send("<h1>Welcome to the Home Page</h1><h2>Here we go</h2>");
     // Using EJS and render
-    res.render("home.ejs");
+    res.render("home");
 });
 
 // ----------------------------
 // Using EJS
 app.get("/fallinlovewith/:thing", (req, res) => {
     let thing = req.params.thing;
-    res.render("love.ejs", { thingVar: thing });
+    res.render("love", { thingVar: thing });
 });
+    
+let posts = [
+    { title: "Post 1", author: "Susy" },
+    { title: "My Pet Bunny", author: "Charlie" },
+    { title: "Can you believe this?", author: "Colt" }
+];
+
 // route for posts
 app.get("/posts", (req, res) => {
-    let posts = [
-        { title: "Post 1", author: "Susy" },
-        { title: "My Pet Bunny", author: "Charlie" },
-        { title: "Can you believe this?", author: "Colt" }
-    ];
+    res.render("posts", { posts: posts });
+});
 
-    res.render("posts.ejs", { posts: posts });
+// post route
+app.post("/addPost", (req, res) => {
+    let newpost = req.body.newpost;
+    let author = req.body.author;
+    posts.push({ title: newpost, author: author }); 
+
+    res.redirect("/posts");
 });
 
 // ----------------------------
